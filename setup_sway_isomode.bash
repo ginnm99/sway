@@ -34,7 +34,6 @@ pacman -S --noconfirm --noprogressbar --needed --disable-download-timeout $(< ./
 # Deploy user configs
 echo "Deploying user configs..."
 rsync -a sway/.config "/home/${username}/"
-#rsync -a sway/.local "/home/${username}/"
 rsync -a sway/home_config/ "/home/${username}/"
 
 # Add "NoDisplay" property to desktop files we don't want in the launcher

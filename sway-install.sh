@@ -78,7 +78,7 @@ do
     if [[ -f "$srcfile" ]]; then
         cp "$srcfile" "$dstfile"
 
-        printf '\nNoDisplay=true\n' >> "$dstfile"
+        printf 'NoDisplay=true\n' >> "$dstfile"
 
         echo "Updated: $file"
     else

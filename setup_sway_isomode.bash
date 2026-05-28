@@ -55,8 +55,6 @@ for file in \
     footclient.desktop \
     nm-connection-editor.desktop \
     org.gnome.FileRoller.desktop \
-    org.xfce.Catfish.desktop \
-    org.xfce.mousepad-settings.desktop \
     qv4l2.desktop \
     qvidcap.desktop \
     reflector-simple.desktop \

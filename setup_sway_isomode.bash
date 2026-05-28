@@ -34,8 +34,53 @@ pacman -S --noconfirm --noprogressbar --needed --disable-download-timeout $(< ./
 # Deploy user configs
 echo "Deploying user configs..."
 rsync -a sway/.config "/home/${username}/"
-rsync -a sway/.local "/home/${username}/"
 rsync -a sway/home_config/ "/home/${username}/"
+
+# Add "NoDisplay" property to desktop files we don't want in the launcher
+echo "Adding custom local desktop files..."
+
+src=/usr/share/applications
+dst="/home/${username}/.local/share/applications"
+
+mkdir -p "$dst"
+
+for file in \
+    avahi-discover.desktop \
+    bssh.desktop \
+    bvnc.desktop \
+    eos-log-tool.desktop \
+    eos-quickstart.desktop \
+    eos-update.desktop \
+    foot-server.desktop \
+    footclient.desktop \
+    nm-connection-editor.desktop \
+    org.gnome.FileRoller.desktop \
+    qv4l2.desktop \
+    qvidcap.desktop \
+    reflector-simple.desktop \
+    stoken-gui.desktop \
+    stoken-gui-small.desktop \
+    thunar-bulk-rename.desktop \
+    thunar-settings.desktop \
+    thunar-volman-settings.desktop \
+    xfce4-about.desktop \
+    yad-icon-browser.desktop \
+    yad-settings.desktop
+do
+    srcfile="$src/$file"
+    dstfile="$dst/$file"
+
+    if [[ -f "$srcfile" ]]; then
+        cp "$srcfile" "$dstfile"
+
+        printf 'NoDisplay=true\n' >> "$dstfile"
+
+        echo "Updated: $file"
+    else
+        echo "Missing: $srcfile" >&2
+    fi
+done
+
 # Restore user ownership
 chown -R "${username}:${username}" "/home/${username}"
 

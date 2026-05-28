@@ -84,6 +84,19 @@ done
 # Restore user ownership
 chown -R "${username}:${username}" "/home/${username}"
 
+# If autologin has been configured, update greetd.conf accordingly
+if grep -q "^\[initial_session\]" /etc/greetd/config.toml; then
+    echo "Calamares autologin detected, adding to greetd.conf..."
+
+    cat <<EOF >> etc/greetd/greetd.conf
+
+[initial_session]
+command = "sway -c /etc/greetd/sway.cfg > /dev/null 2>&1"
+user = "${username}"
+EOF
+
+fi
+
 # Deploy system configs
 echo "Deploying system configs..."
 rsync -a --chown=root:root sway/etc/ /etc/

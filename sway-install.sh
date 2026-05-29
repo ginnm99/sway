@@ -10,7 +10,7 @@ fi
 
 # Check if nvidia-inst is installed
 # If it is, do the Nvidia stuff
-if pacman -Qq nvidia-inst 2>/dev/null | grep -q .; then
+if pacman -Qq | grep -Eq '^nvidia(|-dkms|-open|-open-dkms)$'; then
   echo "Adding the --unsupported-gpu flag to the sway call in greetd.conf..."
   sed -i 's|sway -c|sway --unsupported-gpu -c|' etc/greetd/greetd.conf
   echo "Adding a custom desktop file for Nvidia sessions..."
@@ -94,7 +94,7 @@ if getent group autologin | grep -qw "${username}"; then
     sway_command="sway"
 
     # Add --unsupported-gpu when nvidia-inst is installed
-    if pacman -Qq nvidia-inst 2>/dev/null | grep -q .; then
+    if pacman -Qq | grep -Eq '^nvidia(|-dkms|-open|-open-dkms)$'; then
         echo "nvidia-inst detected, enabling --unsupported-gpu..."
         sway_command="sway --unsupported-gpu"
     fi

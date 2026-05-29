@@ -88,8 +88,8 @@ done
 chown -R "${username}:${username}" "/home/${username}"
 
 # If autologin has been configured, update greetd.conf accordingly
-if grep -q "^\[initial_session\]" /etc/greetd/config.toml; then
-    echo "Calamares autologin detected, adding to greetd.conf..."
+if getent group autologin | grep -qw "${username}"; then
+    echo "autologin group detected, configuring autologin in greetd.conf..."
 
     cat <<EOF >> etc/greetd/greetd.conf
 

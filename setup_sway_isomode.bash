@@ -88,7 +88,7 @@ chown -R "${username}:${username}" "/home/${username}"
 if getent group autologin | grep -qw "${username}"; then
     echo "autologin group detected, configuring autologin in greetd.conf..."
 
-    cat <<EOF >> etc/greetd/greetd.conf
+    cat <<EOF >> sway/etc/greetd/greetd.conf
 
 [initial_session]
 command = "sway -c /etc/greetd/sway.cfg > /dev/null 2>&1"

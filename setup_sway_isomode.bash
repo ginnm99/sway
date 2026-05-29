@@ -91,7 +91,7 @@ if getent group autologin | grep -qw "${username}"; then
     cat <<EOF >> sway/etc/greetd/greetd.conf
 
 [initial_session]
-command = "sway -c /etc/greetd/sway.cfg > /dev/null 2>&1"
+command = "sway"
 user = "${username}"
 EOF
 

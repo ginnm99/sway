@@ -91,13 +91,20 @@ chown -R "${username}:${username}" "/home/${username}"
 if getent group autologin | grep -qw "${username}"; then
     echo "autologin group detected, configuring autologin in greetd.conf..."
 
+    sway_command="sway"
+
+    # Add --unsupported-gpu when nvidia-inst is installed
+    if pacman -Qq nvidia-inst 2>/dev/null | grep -q .; then
+        echo "nvidia-inst detected, enabling --unsupported-gpu..."
+        sway_command="sway --unsupported-gpu"
+    fi
+
     cat <<EOF >> etc/greetd/greetd.conf
 
 [initial_session]
-command = "sway"
+command = "${sway_command}"
 user = "${username}"
 EOF
-
 fi
 
 # Deploy system configs
